@@ -340,3 +340,7 @@ ASALocalRun/
 healthchecksdb
 
 config.cs
+*.sln
+/vs
+/.vs
+.vs
