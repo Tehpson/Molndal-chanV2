@@ -9,6 +9,7 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Threading;
     using System.Threading.Tasks;
 
     internal static class Program
@@ -20,7 +21,21 @@
         private static CommandService _Commands;
         private static IServiceProvider _Service;
 
-        public static void Main() => MainAsync().GetAwaiter().GetResult();
+        public static void Main()
+        {
+            var consoleCommandThr = new Thread(new ThreadStart(ReadConsole)){IsBackground = true};
+            consoleCommandThr.Start();
+            MainAsync().GetAwaiter().GetResult();
+        }
+
+        private static async void ReadConsole()
+        {
+            while (true)
+            {
+                var command = Console.ReadLine();
+                Mölndal_chan_v2.moduels.ConsoleCommand.ConsoleCommandDisp(command);
+            }
+        }
 
         private async static Task MainAsync()
         {
